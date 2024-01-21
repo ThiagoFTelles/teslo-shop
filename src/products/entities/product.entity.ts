@@ -25,7 +25,7 @@ export class Product {
     })
     slug: string
 
-    @Column('numeric', {
+    @Column('int', {
         default: 0,
     })
     stock: number
