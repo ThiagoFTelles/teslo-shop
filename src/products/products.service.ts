@@ -51,7 +51,7 @@ export class ProductsService {
     }
 
     if(!product) 
-      throw new NotFoundException(`Product with ID or slug "${term}" not found`)
+      throw new NotFoundException(`Product with ID, name or slug "${term}" not found`)
 
     return product
   }
