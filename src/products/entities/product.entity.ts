@@ -38,6 +38,12 @@ export class Product {
     @Column('text')
     category: string
 
+    @Column('text', {
+        array: true,
+        default: []
+    })
+    tags: string[]
+
     @BeforeInsert()
     @BeforeUpdate()
     checkSlugInsert() {
