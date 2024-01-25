@@ -110,7 +110,7 @@ export class ProductsService {
   }
 
   async remove(id: string) {
-    const product = await this.productRepository.findOneBy({id})
+    const product = await this.findOne(id)
     await this.productRepository.remove(product)
     return 'removed.'
   }
