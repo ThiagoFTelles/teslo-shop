@@ -10,6 +10,6 @@
 4. Fill the env variables
 5. Start the database
 ```docker-compose up -d```
-6. Run the seed:
+6. Run development mode ```yarn start:dev```
+7. Run the seed:
 GET ```localhost:3000/api/v1/seed```
-7. Run development mode ```yarn start:dev```
