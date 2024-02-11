@@ -43,7 +43,7 @@ export class AuthService {
       throw new UnauthorizedException('Credentials not valid.')
 
     return user
-    // TODO: return JWTrn
+    // TODO: return JWT
 }
 
   private handleDBErrors(error: any): never {
