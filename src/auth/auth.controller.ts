@@ -1,5 +1,6 @@
-import { Controller, Post, Get, Body, UseGuards } from '@nestjs/common'
+import { Controller, Post, Get, Body, UseGuards, Headers } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
+import { IncomingHttpHeaders } from 'http'
 
 import { AuthService } from './auth.service'
 import { GetUser, RawHeaders } from './decorators'
@@ -26,13 +27,15 @@ export class AuthController {
   testingPrivateRoute(
     @GetUser() user: User,
     @GetUser('email') userEmail: string,
-    @RawHeaders() headers: any,
+    @RawHeaders() rawHeaders: any,
+    @Headers() headers: IncomingHttpHeaders,
   ) {
     return {
       ok: true,
       mesage: 'Hello world private.',
       user,
       userEmail,
+      rawHeaders,
       headers,
     }
   }
