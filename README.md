@@ -13,3 +13,4 @@
 6. Run development mode ```yarn start:dev```
 7. Run the seed:
 GET ```localhost:3000/api/v1/seed```
+8. Now you can check the documentation at ```http://localhost:3000/api```
