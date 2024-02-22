@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
 
-import { ConnectedClients } from './interfaces/ConnectedClients.interface';
+import { ConnectedClients } from './interfaces';
 
 @Injectable()
 export class MessagesWsService {
@@ -15,7 +15,7 @@ export class MessagesWsService {
         delete this.connectedClients[clientId]
     }
 
-    getConnectedClients(): number {
-        return Object.keys( this.connectedClients ).length
+    getConnectedClients(): string[] {
+        return Object.keys( this.connectedClients )
     }
 }
