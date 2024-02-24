@@ -16,6 +16,11 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
   handleConnection( client: Socket ) {
     this.messagesWsService.registerClient( client )
     this.wss.emit(EventNames.clientsUpdated, this.messagesWsService.getConnectedClients())
+    // TODO: learn about: 
+    // client.join('roomName') -> insert the user in a romm
+    // this.wss.to('roomName').emit('my message') -> emits only for clients in this room
+    // client.join(user.id) -> uses the id as a room name
+    // client.join(user.email) ...etc
   }
 
   handleDisconnect( client: Socket ) {
@@ -25,6 +30,22 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
   
   @SubscribeMessage(EventNames.messageFromClient)
   onMessageFromClient( client: Socket, payload: NewMessageDto ) {
-    console.log(client.id, payload)
+    // emits only to this client
+    // client.emit(EventNames.messageFromServer, {
+    //   userId: '123123123',
+    //   message: payload.message || 'empty message.'
+    // })
+
+    // emits for all except this client
+    // client.broadcast.emit(EventNames.messageFromServer, {
+    //   userId: '123123123',
+    //   message: payload.message || 'empty message.'
+    // })
+
+    // emits for everybody
+    this.wss.emit(EventNames.messageFromServer, {
+        userName: 'Username',
+        message: payload.message || 'empty message.'
+      })
   }
 }
