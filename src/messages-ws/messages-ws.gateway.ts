@@ -18,19 +18,16 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
     private readonly jwtService: JwtService,
   ) {}
 
-  handleConnection( client: Socket ) {
+  async handleConnection( client: Socket ) {
     const token = client.handshake.headers.authentication as string
     let payload: JwtPayload
     try {
       payload = this.jwtService.verify( token )
+      await this.messagesWsService.registerClient( client, payload.id )
     } catch (error) {
       client.disconnect()
       return
     }
-
-    console.log({ payload })
-
-    this.messagesWsService.registerClient( client )
     this.wss.emit(EventNames.clientsUpdated, this.messagesWsService.getConnectedClients())
     // TODO: learn about: 
     // client.join('roomName') -> insert the user in a romm
@@ -60,7 +57,7 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
 
     // emits for everybody
     this.wss.emit(EventNames.messageFromServer, {
-        userName: 'Username',
+        userName: this.messagesWsService.getUserFullName( client.id ),
         message: payload.message || 'empty message.'
       })
   }
